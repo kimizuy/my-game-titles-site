@@ -1,5 +1,3 @@
-// IGDBクライアント - igdb-api-types パッケージを使用した実装
-// 必要な型定義をインポート
 import type { Game } from "igdb-api-types";
 
 // クライアントの設定オプション型
