@@ -14,11 +14,6 @@ export async function initializeIgdbClient(): Promise<IgdbClient> {
     const authHelper = new IgdbAuthHelper(clientId, clientSecret);
     // アクセストークンを取得
     const tokenData = await authHelper.getAccessToken();
-    console.log(
-      "アクセストークンを取得しました。有効期限:",
-      tokenData.expires_in,
-      "秒",
-    );
 
     // IGDBクライアントを初期化して返す
     return new IgdbClient({
