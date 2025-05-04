@@ -120,14 +120,4 @@ export class IgdbClient {
       throw error;
     }
   }
-
-  /**
-   * 画像URLを生成
-   * @param imageId 画像ID
-   * @param size 画像サイズ（デフォルト: cover_big）
-   * @returns 画像URL
-   */
-  public static getImageUrl(imageId: string, size = "cover_big"): string {
-    return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`;
-  }
 }

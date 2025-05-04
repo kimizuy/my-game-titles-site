@@ -25,3 +25,31 @@ export async function initializeIgdbClient(): Promise<IgdbClient> {
     throw error;
   }
 }
+
+// ref: https://api-docs.igdb.com/#images
+type Size =
+  | "cover_small"
+  | "screenshot_med"
+  | "cover_big"
+  | "logo_med"
+  | "screenshot_big"
+  | "screenshot_huge"
+  | "thumb"
+  | "micro"
+  | "720p"
+  | "1080p";
+
+/**
+ * 画像URLを生成
+ * @param imageId 画像ID
+ * @param size 画像サイズ（デフォルト: cover_big）
+ * @returns 画像URL
+ */
+export function getIgdbImageUrl(
+  imageId: string,
+  size: Size = "cover_big",
+): string {
+  const baseUrl = "https://images.igdb.com";
+  const url = new URL(`/igdb/image/upload/t_${size}/${imageId}.jpg`, baseUrl);
+  return url.toString();
+}
