@@ -1,5 +1,10 @@
 import type { Route } from "./+types/route";
-import { initializeIgdbClient } from "~/lib/igdb";
+import { type } from "arktype";
+import {
+  getIgdbImageUrl,
+  initializeIgdbClient,
+  type GameFieldKey,
+} from "~/lib/igdb";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -13,14 +18,54 @@ export function meta(_: Route.MetaArgs) {
 
 export async function loader({ request }: Route.LoaderArgs) {
   const client = await initializeIgdbClient();
-  const _example = await client.getGames({
-    fields: ["name"],
-    limit: 10,
+  const games = await client.getGames({
+    fields: [
+      "cover.image_id",
+      "game_localizations.name",
+    ] satisfies GameFieldKey[],
+    where: ["platforms = 130", "category = 0", "game_localizations.region = 3"],
+    limit: 300,
   });
 
-  console.log(_example);
+  const Result = type({
+    id: "number",
+    game_localizations: type({
+      id: "number",
+      name: "string",
+    }).array(),
+    cover: {
+      id: "number",
+      image_id: "string",
+    },
+  });
+
+  const result = games.filter(
+    (game): game is typeof Result.infer =>
+      !(Result(game) instanceof type.errors),
+  );
+
+  return result;
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  return <div>Home</div>;
+  return (
+    <div>
+      <h1>Home</h1>
+
+      <section>
+        {loaderData.map((game) => (
+          <div key={game.id}>
+            <h2>{game.game_localizations[0].name}</h2>
+            <img
+              src={getIgdbImageUrl(game.cover.image_id)}
+              alt={game.game_localizations[0].name}
+            />
+            <p>Game ID: {game.id}</p>
+            <p>Cover ID: {game.cover.image_id}</p>
+            <p>Localization Name: {game.game_localizations[0].name}</p>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
 }
