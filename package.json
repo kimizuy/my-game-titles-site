@@ -38,6 +38,7 @@
     "@types/react-dom": "^19.1.2",
     "@vercel/node": "^5.1.2",
     "@vercel/react-router": "^1.0.2",
+    "igdb-api-types": "^0.2.0",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.0.0",
