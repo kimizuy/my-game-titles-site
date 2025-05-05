@@ -31,7 +31,7 @@ export async function loader(_: Route.LoaderArgs) {
       "category = 0", // Main Game
       `game_localizations.region = ${JAPAN_REGION_ID}`,
     ],
-    limit: 300,
+    limit: 30,
   });
 
   const validGames = games.filter(
