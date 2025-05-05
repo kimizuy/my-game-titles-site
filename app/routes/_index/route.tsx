@@ -1,6 +1,6 @@
 import type { Route } from "./+types/route";
 import { type } from "arktype";
-import { Link } from "react-router";
+import { Link, type MetaDescriptor } from "react-router";
 import { JAPAN_REGION_ID } from "~/lib/constants";
 import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
 
@@ -36,7 +36,7 @@ export async function loader(_: Route.LoaderArgs) {
   return result;
 }
 
-export function meta(_: Route.MetaArgs) {
+export function meta(_: Route.MetaArgs): MetaDescriptor[] {
   return [
     { title: "My Game Titles Site" },
     {
