@@ -2,16 +2,6 @@ import type { Route } from "./+types/route";
 import { type } from "arktype";
 import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
 
-export function meta(_: Route.MetaArgs) {
-  return [
-    { title: "My Game Titles Site" },
-    {
-      name: "description",
-      content: "A site to explore and manage your favorite game titles!",
-    },
-  ];
-}
-
 export async function loader({ request }: Route.LoaderArgs) {
   const client = await initializeIgdbClient();
   const games = await client.getGames({
@@ -38,6 +28,16 @@ export async function loader({ request }: Route.LoaderArgs) {
   );
 
   return result;
+}
+
+export function meta(_: Route.MetaArgs) {
+  return [
+    { title: "My Game Titles Site" },
+    {
+      name: "description",
+      content: "A site to explore and manage your favorite game titles!",
+    },
+  ];
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
