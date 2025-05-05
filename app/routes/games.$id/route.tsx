@@ -63,12 +63,12 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
       <section className="grid grid-flow-col">
         {loaderData?.artworks?.map(
-          (artwork) =>
+          (artwork, index) =>
             typeof artwork === "object" && (
               <div key={artwork.id}>
                 <img
                   src={getIgdbImageUrl(artwork.image_id)}
-                  alt={artwork.image_id}
+                  alt={`Artwork ${index + 1}`}
                   className="artwork-image"
                 />
               </div>
