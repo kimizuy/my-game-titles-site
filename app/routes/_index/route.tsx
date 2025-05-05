@@ -1,10 +1,6 @@
 import type { Route } from "./+types/route";
 import { type } from "arktype";
-import {
-  getIgdbImageUrl,
-  initializeIgdbClient,
-  type GameFieldKey,
-} from "~/lib/igdb";
+import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -19,10 +15,7 @@ export function meta(_: Route.MetaArgs) {
 export async function loader({ request }: Route.LoaderArgs) {
   const client = await initializeIgdbClient();
   const games = await client.getGames({
-    fields: [
-      "cover.image_id",
-      "game_localizations.name",
-    ] satisfies GameFieldKey[],
+    fields: ["cover.image_id", "game_localizations.name"],
     where: ["platforms = 130", "category = 0", "game_localizations.region = 3"],
     limit: 300,
   });

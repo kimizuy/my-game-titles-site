@@ -1,4 +1,30 @@
-import type { Game } from "igdb-api-types";
+import type {
+  AgeRating,
+  AlternativeName,
+  Artwork,
+  Collection,
+  Cover,
+  ExternalGame,
+  Franchise,
+  Game,
+  GameEngine,
+  GameLocalization,
+  GameMode,
+  GameStatus,
+  GameType,
+  GameVideo,
+  Genre,
+  InvolvedCompany,
+  Keyword,
+  LanguageSupport,
+  MultiplayerMode,
+  Platform,
+  PlayerPerspective,
+  ReleaseDate,
+  Screenshot,
+  Theme,
+  Website,
+} from "igdb-api-types";
 
 // クライアントの設定オプション型
 interface IgdbClientOptions {
@@ -9,7 +35,7 @@ interface IgdbClientOptions {
 
 // クエリオプション型
 interface IgdbQueryOptions {
-  fields?: string[];
+  fields?: GameFieldKey[];
   limit?: number;
   offset?: number;
   search?: string;
@@ -119,3 +145,42 @@ export class IgdbClient {
     }
   }
 }
+
+export type GameFieldKey = NestedKeyOf<
+  Game & {
+    age_ratings: AgeRating;
+    alternative_names: AlternativeName;
+    artworks: Artwork;
+    collections: Collection;
+    cover: Cover;
+    external_games: ExternalGame;
+    franchise: Franchise;
+    franchises: Franchise;
+    game_engines: GameEngine;
+    game_localizations: GameLocalization;
+    game_modes: GameMode;
+    game_status: GameStatus;
+    game_type: GameType;
+    genres: Genre;
+    involved_companies: InvolvedCompany;
+    keywords: Keyword;
+    language_supports: LanguageSupport;
+    multiplayer_modes: MultiplayerMode;
+    parent_game: Game;
+    platforms: Platform;
+    player_perspectives: PlayerPerspective;
+    release_dates: ReleaseDate;
+    screenshots: Screenshot;
+    similar_games: Game;
+    themes: Theme;
+    version_parent: Game;
+    videos: GameVideo;
+    websites: Website;
+  }
+>;
+
+type NestedKeyOf<T> = {
+  [K in keyof T & (string | number)]: T[K] extends object
+    ? `${K}.${NestedKeyOf<T[K]>}`
+    : `${K}`;
+}[keyof T & (string | number)];
