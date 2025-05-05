@@ -1,5 +1,6 @@
 import type { Route } from "./+types/route";
 import { type } from "arktype";
+import { Link } from "react-router";
 import { JAPAN_REGION_ID } from "~/lib/constants";
 import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
 
@@ -50,18 +51,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     <div>
       <h1>Home</h1>
 
-      <section>
+      <section className="columns-2 gap-0 md:columns-3 lg:columns-4 xl:columns-5">
         {loaderData.map((game) => (
-          <div key={game.id}>
-            <h2>{game.game_localizations[0].name}</h2>
+          <Link to={`/games/${game.id}`} key={game.id}>
             <img
-              src={getIgdbImageUrl(game.cover.image_id)}
+              src={getIgdbImageUrl(game.cover.image_id, "cover_big_2x")}
               alt={game.game_localizations[0].name}
             />
-            <p>Game ID: {game.id}</p>
-            <p>Cover ID: {game.cover.image_id}</p>
-            <p>Localization Name: {game.game_localizations[0].name}</p>
-          </div>
+          </Link>
         ))}
       </section>
     </div>
