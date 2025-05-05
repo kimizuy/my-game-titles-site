@@ -18,6 +18,7 @@ export async function loader(_: Route.LoaderArgs) {
       id: "number",
       name: "string",
       region: "number",
+      summary: "string",
     }).array(),
     cover: {
       id: "number",
@@ -29,6 +30,7 @@ export async function loader(_: Route.LoaderArgs) {
     fields: [
       "game_localizations.name",
       "game_localizations.region",
+      "game_localizations.summary",
       "cover.image_id",
     ] satisfies NestedKeyOf<(typeof Games.infer)[number]>[],
     where: [
