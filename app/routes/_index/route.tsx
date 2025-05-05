@@ -99,7 +99,7 @@ function GameCard({
       to={to}
       viewTransition
       className="relative block rounded-lg transition-all duration-300 hover:z-10 hover:scale-125"
-      prefetch="intent"
+      prefetch="intent" // カーソルホバー時にプリフェッチする
     >
       <div className="relative rounded-lg">
         <img
