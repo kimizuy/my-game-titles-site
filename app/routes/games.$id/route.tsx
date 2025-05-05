@@ -19,7 +19,7 @@ export async function loader({ params }: Route.LoaderArgs) {
       name: "string",
       region: "number",
     }).array(),
-    artworks: type({
+    "artworks?": type({
       id: "number",
       image_id: "string",
     }).array(),
@@ -61,7 +61,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     <div>
       <h1>{loaderData.name}</h1>
 
-      <section className="grid grid-flow-col">
+      <section className="grid grid-flow-col overflow-x-auto">
         {loaderData?.artworks?.map(
           (artwork, index) =>
             typeof artwork === "object" && (
