@@ -80,47 +80,40 @@ export default function GameDetail({ loaderData }: Route.ComponentProps) {
       <button
         type="button"
         onClick={handleBack}
-        className="inline-flex cursor-pointer items-center gap-1 border-none bg-transparent"
+        className="inline-flex cursor-pointer items-center gap-1 border-none bg-transparent text-blue-400"
       >
         <MoveLeft />
         戻る
       </button>
 
-      <h1 className="text-2xl font-bold text-balance">{loaderData.name}</h1>
+      <h1 className="text-2xl font-bold">{loaderData.name}</h1>
 
-      <div className="flex flex-col gap-6 md:flex-row">
-        <div className="md:w-1/3">
-          {loaderData.cover && (
-            <img
-              src={getIgdbImageUrl(loaderData.cover.image_id, "cover_big_2x")}
-              alt={loaderData.name}
-              style={{
-                viewTransitionName: isTransitioning
-                  ? `game-cover-${loaderData.id}`
-                  : "",
-              }}
-              className="w-full rounded-lg shadow-lg"
-            />
-          )}
-        </div>
+      <div className="md:w-1/2">
+        {loaderData.cover && (
+          <img
+            src={getIgdbImageUrl(loaderData.cover.image_id, "cover_big_2x")}
+            alt={loaderData.name}
+            style={{
+              viewTransitionName: isTransitioning
+                ? `game-cover-${loaderData.id}`
+                : "",
+            }}
+            className="w-full rounded-lg shadow-lg"
+          />
+        )}
       </div>
 
       {loaderData?.artworks?.length && loaderData.artworks.length > 0 ? (
         <section className="mt-8">
           <h2 className="text-xl font-semibold">アートワーク</h2>
-          {/* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); */}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
             {loaderData.artworks?.map(
               (artwork, index) =>
                 typeof artwork === "object" && (
-                  <div
-                    key={artwork.id}
-                    className="bg-background min-w-[280px] snap-start overflow-hidden rounded-lg shadow-md"
-                  >
+                  <div key={artwork.id}>
                     <img
                       src={getIgdbImageUrl(artwork.image_id)}
                       alt={`Artwork ${index + 1}`}
-                      className="h-auto w-full object-cover"
                     />
                   </div>
                 ),
