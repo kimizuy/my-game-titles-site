@@ -2,7 +2,7 @@ import type { Route } from "./+types/route";
 import { type } from "arktype";
 import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader(_: Route.LoaderArgs) {
   const client = await initializeIgdbClient();
   const games = await client.getGames({
     fields: ["cover.image_id", "game_localizations.name"],
