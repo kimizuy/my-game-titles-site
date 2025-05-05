@@ -146,10 +146,20 @@ export class IgdbClient {
   }
 }
 
+type Primitive = string | number | boolean | null | undefined;
+
+// オプショナルプロパティの型を展開する型
+type Defined<T> = T extends undefined ? never : T;
+
+// 配列の要素型を取得する型
 type IsArray<T> = T extends Array<infer U> ? U : T;
 
 export type NestedKeyOf<T> = {
-  [K in keyof T & (string | number)]: IsArray<T[K]> extends object
-    ? `${K}.${NestedKeyOf<IsArray<T[K]>>}`
-    : `${K}`;
+  [K in keyof T & (string | number)]: Defined<T[K]> extends never
+    ? `${K}`
+    : IsArray<Defined<T[K]>> extends Primitive
+      ? `${K}`
+      : IsArray<Defined<T[K]>> extends object
+        ? `${K}` | `${K}.${NestedKeyOf<IsArray<Defined<T[K]>>>}`
+        : `${K}`;
 }[keyof T & (string | number)];
