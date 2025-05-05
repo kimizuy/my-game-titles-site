@@ -1,3 +1,4 @@
+import { JAPAN_REGION_ID } from "../constants";
 import type {
   AgeRating,
   AlternativeName,
@@ -82,7 +83,7 @@ export class IgdbClient {
   ): Promise<Game | null> {
     try {
       const options: IgdbQueryOptions = {
-        where: [`id = ${id}`],
+        where: [`id = ${id}`, `game_localizations.region = ${JAPAN_REGION_ID}`],
         fields,
         limit: 1,
       };

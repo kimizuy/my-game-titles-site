@@ -1,12 +1,17 @@
 import type { Route } from "./+types/route";
 import { type } from "arktype";
+import { JAPAN_REGION_ID } from "~/lib/constants";
 import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
 
 export async function loader(_: Route.LoaderArgs) {
   const client = await initializeIgdbClient();
   const games = await client.getGames({
     fields: ["cover.image_id", "game_localizations.name"],
-    where: ["platforms = 130", "category = 0", "game_localizations.region = 3"],
+    where: [
+      "platforms = 130", // Nintendo Switch
+      "category = 0", // Main Game
+      `game_localizations.region = ${JAPAN_REGION_ID}`,
+    ],
     limit: 300,
   });
 
