@@ -3,16 +3,12 @@ import { type } from "arktype";
 import type { MetaDescriptor } from "react-router";
 import { JAPAN_REGION_ID } from "~/lib/constants";
 import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
+import type { NestedKeyOf } from "~/lib/igdb/igdb-client";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const client = await initializeIgdbClient();
-  const game = await client.getGameById(params.id, [
-    "game_localizations.name",
-    "game_localizations.region",
-    "artworks.image_id",
-  ]);
 
-  const Result = type({
+  const Game = type({
     id: "number",
     game_localizations: type({
       id: "number",
@@ -25,13 +21,19 @@ export async function loader({ params }: Route.LoaderArgs) {
     }).array(),
   });
 
-  const validGame = Result(game);
+  const data = await client.getGameById(params.id, [
+    "game_localizations.name",
+    "game_localizations.region",
+    "artworks.image_id",
+  ] satisfies NestedKeyOf<typeof Game.infer>[]);
 
-  if (validGame instanceof type.errors) {
+  const validated = Game(data);
+
+  if (validated instanceof type.errors) {
     throw new Error("Invalid game data");
   }
 
-  const { game_localizations, ...rest } = validGame;
+  const { game_localizations, ...rest } = validated;
   const japanLocalization = game_localizations.find(
     (localization) => localization.region === JAPAN_REGION_ID,
   );

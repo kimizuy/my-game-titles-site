@@ -5,27 +5,28 @@ import { JAPAN_REGION_ID } from "~/lib/constants";
 import { getIgdbImageUrl, initializeIgdbClient } from "~/lib/igdb";
 import type { NestedKeyOf } from "~/lib/igdb/igdb-client";
 
-const Result = type({
-  id: "number",
-  game_localizations: type({
-    id: "number",
-    name: "string",
-    region: "number",
-  }).array(),
-  cover: {
-    id: "number",
-    image_id: "string",
-  },
-});
-
 export async function loader(_: Route.LoaderArgs) {
   const client = await initializeIgdbClient();
-  const games = await client.getGames({
+
+  const Games = type({
+    id: "number",
+    game_localizations: type({
+      id: "number",
+      name: "string",
+      region: "number",
+    }).array(),
+    cover: {
+      id: "number",
+      image_id: "string",
+    },
+  }).array();
+
+  const data = await client.getGames({
     fields: [
       "game_localizations.name",
       "game_localizations.region",
       "cover.image_id",
-    ] satisfies NestedKeyOf<typeof Result.infer>[],
+    ] satisfies NestedKeyOf<(typeof Games.infer)[number]>[],
     where: [
       "platforms = 130", // Nintendo Switch
       "category = 0", // Main Game
@@ -34,13 +35,14 @@ export async function loader(_: Route.LoaderArgs) {
     limit: 30,
   });
 
-  const validGames = games.filter(
-    (game): game is typeof Result.infer =>
-      !(Result(game) instanceof type.errors),
-  );
+  const validated = Games(data);
 
-  const result = validGames.map((game) => {
-    const { game_localizations, ...rest } = game;
+  if (validated instanceof type.errors) {
+    throw new Error("Invalid game data");
+  }
+
+  const result = validated.map((v) => {
+    const { game_localizations, ...rest } = v;
     const japanLocalization = game_localizations.find(
       (localization) => localization.region === JAPAN_REGION_ID,
     );
