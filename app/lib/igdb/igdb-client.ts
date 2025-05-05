@@ -71,6 +71,31 @@ export class IgdbClient {
   }
 
   /**
+   * IDからゲーム詳細を取得するメソッド
+   * @param id 取得したいゲームのID
+   * @param fields 取得したいフィールド（省略可）
+   * @returns ゲーム情報のPromise
+   */
+  public async getGameById(
+    id: string,
+    fields?: IgdbQueryOptions["fields"],
+  ): Promise<Game | null> {
+    try {
+      const options: IgdbQueryOptions = {
+        where: [`id = ${id}`],
+        fields,
+        limit: 1,
+      };
+
+      const results = await this.query<Game>("games", options);
+      return results.length > 0 ? results[0] : null;
+    } catch (error) {
+      console.error(`ゲーム取得エラー (ID: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
    * 一般的なクエリメソッド
    * @param endpoint APIエンドポイント
    * @param options クエリオプション
