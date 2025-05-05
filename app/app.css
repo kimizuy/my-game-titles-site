@@ -125,3 +125,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.2, 0, 0.1, 1);
+    animation-delay: 0ms;
+  }
+}
