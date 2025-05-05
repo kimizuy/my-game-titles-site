@@ -25,17 +25,24 @@ export async function loader({ params }: Route.LoaderArgs) {
     }).array(),
   });
 
-  if (Result(game) instanceof type.errors) {
+  const validGame = Result(game);
+
+  if (validGame instanceof type.errors) {
     throw new Error("Invalid game data");
   }
 
-  const validGame = game as typeof Result.infer;
+  const { game_localizations, ...rest } = validGame;
+  const japanLocalization = game_localizations.find(
+    (localization) => localization.region === JAPAN_REGION_ID,
+  );
+
+  if (!japanLocalization) {
+    throw new Error("No Japanese localization found");
+  }
 
   const result = {
-    ...validGame,
-    game_localizations: validGame.game_localizations.filter(
-      (localization) => localization.region === JAPAN_REGION_ID,
-    ),
+    ...rest,
+    name: japanLocalization.name,
   };
 
   return result;
@@ -44,7 +51,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 export function meta({ data }: Route.MetaArgs): MetaDescriptor[] {
   return [
     {
-      title: data.game_localizations[0].name,
+      title: data.name,
     },
   ];
 }
@@ -52,7 +59,7 @@ export function meta({ data }: Route.MetaArgs): MetaDescriptor[] {
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <div>
-      <h1>{loaderData.game_localizations[0].name}</h1>
+      <h1>{loaderData.name}</h1>
 
       <section className="grid grid-flow-col">
         {loaderData?.artworks?.map(
