@@ -21,6 +21,7 @@
 - Tailwind CSS
 - shadcn/ui
 - @tailwindcss/typography
+- View Transition API
 
 ### アニメーション
 
