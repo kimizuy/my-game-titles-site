@@ -35,7 +35,6 @@
 
 - React Router 7
 - @react-router/fs-routes
-- @react-router/node
 
 ### API連携
 
@@ -56,20 +55,13 @@
 
 ### インストール手順
 
-1. リポジトリをクローンする
-
-```bash
-git clone https://github.com/kimizuy/my-game-titles-site.git
-cd my-game-titles-site
-```
-
-2. 依存パッケージをインストールする
+1. 依存パッケージをインストールする
 
 ```bash
 npm install
 ```
 
-3. 開発サーバーを起動する
+2. 開発サーバーを起動する
 
 ```bash
 npm run dev
