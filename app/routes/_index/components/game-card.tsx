@@ -79,7 +79,7 @@ export function GameCard({ game }: GameCardProps) {
             style={{ backfaceVisibility: "hidden" }}
           >
             <h2 className="line-clamp-4 text-center text-2xl font-bold text-white">
-              {game.summary}
+              {game.summary || game.name}
             </h2>
           </div>
 
@@ -94,11 +94,15 @@ export function GameCard({ game }: GameCardProps) {
                 : "",
             }}
           >
-            <img
-              src={getIgdbImageUrl(game.cover.image_id, "cover_big_2x")}
-              alt={game.name}
-              className="h-full w-full object-contain"
-            />
+            {game.cover?.image_id ? (
+              <img
+                src={getIgdbImageUrl(game.cover?.image_id, "cover_big_2x")}
+                alt={game.name}
+                className="h-full w-full object-contain"
+              />
+            ) : (
+              game.japanName
+            )}
           </div>
         </motion.div>
       </Link>

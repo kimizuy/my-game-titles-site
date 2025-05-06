@@ -11,20 +11,22 @@ export async function loader(_: Route.LoaderArgs) {
 
   const Games = type({
     id: "number",
+    name: "string",
     game_localizations: type({
       id: "number",
       name: "string",
       region: "number",
     }).array(),
-    cover: {
+    "cover?": {
       id: "number",
       image_id: "string",
     },
-    summary: "string",
+    "summary?": "string",
   }).array();
 
   const data = await client.getGames({
     fields: [
+      "name",
       "game_localizations.name",
       "game_localizations.region",
       "summary",
@@ -35,13 +37,13 @@ export async function loader(_: Route.LoaderArgs) {
       "category = 0", // Main Game
       `game_localizations.region = ${JAPAN_REGION_ID}`,
     ],
-    limit: 30,
+    limit: 500, // 一回のリクエストで取得できる最大件数を指定する
   });
 
   const validated = Games(data);
 
   if (validated instanceof type.errors) {
-    throw new Error("Invalid game data");
+    throw new Error(`Invalid game data: ${validated.summary}`);
   }
 
   const result = validated.map((v) => {
@@ -56,7 +58,7 @@ export async function loader(_: Route.LoaderArgs) {
 
     return {
       ...rest,
-      name: japanLocalization.name,
+      japanName: japanLocalization.name,
     };
   });
 
@@ -75,7 +77,14 @@ export function meta(_: Route.MetaArgs): MetaDescriptor[] {
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto grid gap-4">
+      <h1>Switch Mystery Cards</h1>
+
+      <p>
+        Nintendo
+        Switchのソフトまとめたギャラリー。カードにカーソルを合わせるとパッケージ画像が表示されるぞ！どんなゲームか想像してみよう！
+      </p>
+
       <section className="flex flex-wrap gap-4">
         {loaderData.map((game) => (
           <GameCard key={game.id} game={game} />

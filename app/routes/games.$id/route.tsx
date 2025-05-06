@@ -18,7 +18,7 @@ export async function loader({ params }: Route.LoaderArgs) {
       name: "string",
       region: "number",
     }).array(),
-    cover: {
+    "cover?": {
       id: "number",
       image_id: "string",
     },
@@ -26,7 +26,7 @@ export async function loader({ params }: Route.LoaderArgs) {
       id: "number",
       image_id: "string",
     }).array(),
-    summary: "string",
+    "summary?": "string",
   });
 
   const data = await client.getGameById(params.id, [
@@ -119,10 +119,12 @@ export default function GameDetail({ loaderData }: Route.ComponentProps) {
         </section>
       ) : null}
 
-      <section>
-        <h2>Summary</h2>
-        <p>{loaderData.summary}</p>
-      </section>
+      {loaderData.summary ? (
+        <section>
+          <h2>Summary</h2>
+          <p>{loaderData.summary}</p>
+        </section>
+      ) : null}
 
       <div>
         <button

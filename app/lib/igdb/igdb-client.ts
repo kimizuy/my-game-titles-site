@@ -42,7 +42,12 @@ export class IgdbClient {
    * @returns ゲームの配列のPromise
    */
   public async getGames(options: IgdbQueryOptions = {}): Promise<Game[]> {
-    return this.query<Game>("games", options);
+    try {
+      return this.query<Game>("games", options);
+    } catch (error) {
+      console.error("ゲーム取得エラー:", error);
+      throw error;
+    }
   }
 
   /**
