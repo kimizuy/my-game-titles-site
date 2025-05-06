@@ -47,10 +47,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     title: "Home",
                     href: "/",
                   },
-                  {
-                    title: "About",
-                    href: "/about",
-                  },
                 ]}
               />
               <div className="ml-auto flex items-center space-x-4">
