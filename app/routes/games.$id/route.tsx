@@ -12,6 +12,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
   const Game = type({
     id: "number",
+    name: "string",
     game_localizations: type({
       id: "number",
       name: "string",
@@ -25,13 +26,16 @@ export async function loader({ params }: Route.LoaderArgs) {
       id: "number",
       image_id: "string",
     }).array(),
+    summary: "string",
   });
 
   const data = await client.getGameById(params.id, [
+    "name",
     "game_localizations.name",
     "game_localizations.region",
     "cover.image_id",
     "artworks.image_id",
+    "summary",
   ] satisfies NestedKeyOf<typeof Game.infer>[]);
 
   const validated = Game(data);
@@ -51,7 +55,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
   const result = {
     ...rest,
-    name: japanLocalization.name,
+    japanName: japanLocalization.name,
   };
 
   return result;
@@ -60,7 +64,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 export function meta({ data }: Route.MetaArgs): MetaDescriptor[] {
   return [
     {
-      title: data.name,
+      title: data.japanName,
     },
   ];
 }
@@ -76,17 +80,9 @@ export default function GameDetail({ loaderData }: Route.ComponentProps) {
   };
 
   return (
-    <div className="prose dark:prose-invert mx-auto">
-      <button
-        type="button"
-        onClick={handleBack}
-        className="inline-flex cursor-pointer items-center gap-1 border-none bg-transparent text-blue-400"
-      >
-        <MoveLeft />
-        戻る
-      </button>
-
-      <h1 className="text-2xl font-bold">{loaderData.name}</h1>
+    <article className="prose dark:prose-invert mx-auto">
+      <h1>{loaderData.japanName}</h1>
+      <p className="text-xl font-semibold">{loaderData.name}</p>
 
       <div className="md:w-1/2">
         {loaderData.cover && (
@@ -104,8 +100,8 @@ export default function GameDetail({ loaderData }: Route.ComponentProps) {
       </div>
 
       {loaderData?.artworks?.length && loaderData.artworks.length > 0 ? (
-        <section className="mt-8">
-          <h2 className="text-xl font-semibold">アートワーク</h2>
+        <section>
+          <h2>Artworks</h2>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
             {loaderData.artworks?.map(
               (artwork, index) =>
@@ -114,6 +110,7 @@ export default function GameDetail({ loaderData }: Route.ComponentProps) {
                     <img
                       src={getIgdbImageUrl(artwork.image_id)}
                       alt={`Artwork ${index + 1}`}
+                      loading="lazy"
                     />
                   </div>
                 ),
@@ -121,6 +118,22 @@ export default function GameDetail({ loaderData }: Route.ComponentProps) {
           </div>
         </section>
       ) : null}
-    </div>
+
+      <section>
+        <h2>Summary</h2>
+        <p>{loaderData.summary}</p>
+      </section>
+
+      <div>
+        <button
+          type="button"
+          onClick={handleBack}
+          className="inline-flex cursor-pointer items-center gap-1 border-none bg-transparent text-blue-400"
+        >
+          <MoveLeft />
+          戻る
+        </button>
+      </div>
+    </article>
   );
 }
