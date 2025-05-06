@@ -18,19 +18,19 @@ export async function loader(_: Route.LoaderArgs) {
       id: "number",
       name: "string",
       region: "number",
-      summary: "string",
     }).array(),
     cover: {
       id: "number",
       image_id: "string",
     },
+    summary: "string",
   }).array();
 
   const data = await client.getGames({
     fields: [
       "game_localizations.name",
       "game_localizations.region",
-      "game_localizations.summary",
+      "summary",
       "cover.image_id",
     ] satisfies NestedKeyOf<(typeof Games.infer)[number]>[],
     where: [
