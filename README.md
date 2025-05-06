@@ -1,53 +1,76 @@
-# Welcome to React Router!
+# Switch Mystery Cards
 
-A modern, production-ready template for building full-stack React applications using React Router.
+このサイトは「Nintendo Switchのソフトを一覧できるサイト」です。カードにカーソルを合わせるとパッケージ画像が表示され、どんなゲームか想像する楽しさを提供します。
 
-## Features
+## 主な特徴
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- **Nintendo Switchゲームの一覧表示**: 多数のNintendo Switchソフトを閲覧できます
+- **パッケージ画像の表示**: カードにカーソルを合わせるとアニメーションとともにパッケージ画像が表示されます
+- **想像する楽しさ**: ゲームのパッケージを隠すことで、どんなゲームかを想像する楽しさを提供します
+- **最新のデータ**: [IGDB API](https://www.igdb.com/)から最新のゲーム情報を取得し、ほぼ全てのNintendo Switchソフトを網羅しています
 
-## Getting Started
+## 技術スタック
 
-### Installation
+### フロントエンド
 
-Install the dependencies:
+- React 19
+- TypeScript
+
+### UI/スタイリング
+
+- Tailwind CSS
+- shadcn/ui
+- @tailwindcss/typography
+- View Transition API
+
+### アニメーション
+
+- motion
+
+### データ検証
+
+- arktype
+
+### ルーティング
+
+- React Router 7
+- @react-router/fs-routes
+- @react-router/node
+
+### API連携
+
+- IGDB API
+
+### 開発環境
+
+- Vite
+- TypeScript
+- Biome
+
+## 開発環境のセットアップ
+
+### 前提条件
+
+- Node.js 22以上がインストールされていること
+- npmがインストールされていること
+
+### インストール手順
+
+1. リポジトリをクローンする
+
+```bash
+git clone https://github.com/kimizuy/my-game-titles-site.git
+cd my-game-titles-site
+```
+
+2. 依存パッケージをインストールする
 
 ```bash
 npm install
 ```
 
-### Development
-
-Start the development server with HMR:
+3. 開発サーバーを起動する
 
 ```bash
 npm run dev
 ```
-
-Your application will be available at `http://localhost:3000`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fremix-run%2Freact-router-templates%2Ftree%2Fmain%2Fvercel&project-name=my-react-router-app&repository-name=my-react-router-app)
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
