@@ -1,50 +1,75 @@
 # Switch Mystery Cards
 
-このサイトは「Nintendo Switchのソフトを一覧できるサイト」です。カードにカーソルを合わせるとパッケージ画像が表示され、どんなゲームか想像する楽しさを提供します。スマートフォンでも快適に使用できるよう設計されています。
+このサイトは「Nintendo Switchのソフトを一覧できるサイト」です。カードにカーソルを合わせるとパッケージ画像が表示され、どんなゲームか想像する楽しさを提供します。
 
 ## 主な特徴
 
 - **Nintendo Switchゲームの一覧表示**: 多数のNintendo Switchソフトを閲覧できます
-- **日本語タイトルの表示**: 日本語ローカライズされたゲームタイトルを表示します
-- **パッケージ画像の表示**: カードにカーソルを合わせるとパッケージ画像が表示されます
-- **ミステリー体験**: パッケージ画像を見て、どんなゲームか想像する楽しさを提供します
-- **レスポンシブデザイン**: スマートフォン画面に最適化されたレイアウトで、外出先でも快適に使用可能
-- **高速な一覧表示**: 最大500タイトルの情報を一度に表示できます
-- **カード形式の表示**: 直感的なカードUIでゲーム情報をわかりやすく表示します
-
-モバイルファーストの思想で設計されており、スマートフォンの画面サイズに合わせたグリッドレイアウトを採用。タッチ操作の操作感を最適化し、外出先でも素早くゲームを閲覧できます。
+- **パッケージ画像の表示**: カードにカーソルを合わせるとアニメーションとともにパッケージ画像が表示されます
+- **想像する楽しさ**: ゲームのパッケージを隠すことで、どんなゲームかを想像する楽しさを提供します
+- **最新のデータ**: [IGDB API](https://www.igdb.com/)から最新のゲーム情報を取得し、ほぼ全てのNintendo Switchソフトを網羅しています
 
 ## 技術スタック
 
 ### フロントエンド
+
 - React 19
 - TypeScript
 
 ### UI/スタイリング
+
 - Tailwind CSS
-- Radix UI
-- class-variance-authority
-- tailwind-merge
+- shadcn/ui
 - @tailwindcss/typography
 
 ### アニメーション
-- framer-motion
+
 - motion
-- tw-animate-css
 
 ### データ検証
+
 - arktype
 
 ### ルーティング
+
 - React Router 7
 - @react-router/fs-routes
 - @react-router/node
 
 ### API連携
-- IGDB API (igdb-api-types)
+
+- IGDB API
 
 ### 開発環境
+
 - Vite
 - TypeScript
 - Biome
-- Node.js 22
+
+## 開発環境のセットアップ
+
+### 前提条件
+
+- Node.js 22以上がインストールされていること
+- npmがインストールされていること
+
+### インストール手順
+
+1. リポジトリをクローンする
+
+```bash
+git clone https://github.com/kimizuy/my-game-titles-site.git
+cd my-game-titles-site
+```
+
+2. 依存パッケージをインストールする
+
+```bash
+npm install
+```
+
+3. 開発サーバーを起動する
+
+```bash
+npm run dev
+```
