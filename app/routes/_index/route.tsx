@@ -67,24 +67,24 @@ export async function loader(_: Route.LoaderArgs) {
 
 export function meta(_: Route.MetaArgs): MetaDescriptor[] {
   return [
-    { title: "My Game Titles Site" },
+    { title: "Switch Mystery Cards" },
     {
       name: "description",
-      content: "A site to explore and manage your favorite game titles!",
+      content: "Nintendo Switchのソフトを一覧できるサイトです",
     },
   ];
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
-    <div className="container mx-auto grid gap-4">
-      <h1>Switch Mystery Cards</h1>
-
-      <p>
-        Nintendo
-        Switchのソフトまとめたギャラリー。カードにカーソルを合わせるとパッケージ画像が表示されるぞ！どんなゲームか想像してみよう！
-      </p>
-
+    <div className="container mx-auto grid gap-16">
+      <div>
+        <h1 className="text-3xl font-bold">Switch Mystery Cards</h1>
+        <p className="mt-4">
+          Nintendo
+          Switchのソフトを一覧できるサイトです。カードにカーソルを合わせるとパッケージ画像が表示されます。どんなゲームか想像してみよう！
+        </p>
+      </div>
       <section className="flex flex-wrap gap-4">
         {loaderData.map((game) => (
           <GameCard key={game.id} game={game} />
