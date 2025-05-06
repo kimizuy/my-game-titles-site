@@ -2,7 +2,7 @@ import type { Route } from "./+types/route";
 import { GameCard } from "./components/game-card";
 import { type } from "arktype";
 import type { MetaDescriptor } from "react-router";
-import { JAPAN_REGION_ID } from "~/lib/constants";
+import { JAPAN_REGION_ID, SITE_NAME } from "~/lib/constants";
 import { initializeIgdbClient } from "~/lib/igdb";
 import type { NestedKeyOf } from "~/lib/igdb/igdb-client";
 
@@ -67,7 +67,7 @@ export async function loader(_: Route.LoaderArgs) {
 
 export function meta(_: Route.MetaArgs): MetaDescriptor[] {
   return [
-    { title: "Switch Mystery Cards" },
+    { title: SITE_NAME },
     {
       name: "description",
       content: "Nintendo Switchのソフトを一覧できるサイトです",
@@ -78,13 +78,12 @@ export function meta(_: Route.MetaArgs): MetaDescriptor[] {
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <div className="container mx-auto grid gap-16">
-      <div>
-        <h1 className="text-3xl font-bold">Switch Mystery Cards</h1>
-        <p className="mt-4">
-          Nintendo
-          Switchのソフトを一覧できるサイトです。カードにカーソルを合わせるとパッケージ画像が表示されます。どんなゲームか想像してみよう！
-        </p>
-      </div>
+      <h1 className="sr-only">{SITE_NAME}</h1>
+      <p>
+        Nintendo Switchのソフトを一覧できるサイトです。
+        <br />
+        カードにカーソルを合わせるとパッケージ画像が表示されます。どんなゲームか想像してみよう！
+      </p>
       <section className="flex flex-wrap gap-4">
         {loaderData.map((game) => (
           <GameCard key={game.id} game={game} />

@@ -5,6 +5,7 @@ import { Main } from "./components/layout/main";
 import { TopNav } from "./components/layout/top-nav";
 import { ThemeProvider } from "./components/theme-provider";
 import { ThemeSwitch } from "./components/theme-switch";
+import { SITE_NAME } from "./lib/constants";
 import {
   Link,
   Links,
@@ -44,7 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <TopNav
                 links={[
                   {
-                    title: "Home",
+                    title: SITE_NAME,
                     href: "/",
                   },
                 ]}
