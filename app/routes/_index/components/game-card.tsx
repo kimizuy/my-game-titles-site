@@ -1,5 +1,5 @@
 import type { Route } from "../+types/route";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useState } from "react";
 import { Link, useNavigation, useViewTransitionState } from "react-router";
 import { getIgdbImageUrl } from "~/lib/igdb";
@@ -34,7 +34,7 @@ export function GameCard({ game }: GameCardProps) {
   };
 
   // 輪郭が光るパルスエフェクト用のvariants
-  const pulseOutlineVariants = {
+  const pulseOutlineVariants: Variants = {
     idle: {
       boxShadow: "0 0 0 0px rgba(59, 130, 246, 0)",
     },
@@ -46,7 +46,7 @@ export function GameCard({ game }: GameCardProps) {
       ],
       transition: {
         repeat: Number.POSITIVE_INFINITY,
-        duration: 1.5,
+        duration: 1,
         ease: "easeInOut",
       },
     },
@@ -54,7 +54,7 @@ export function GameCard({ game }: GameCardProps) {
 
   return (
     <motion.div
-      className="h-96 w-72 cursor-pointer"
+      className="h-96 w-72 cursor-pointer rounded-xl"
       style={{ perspective: "1000px" }}
       animate={isNavigating ? "navigating" : "idle"}
       variants={pulseOutlineVariants}
@@ -78,7 +78,7 @@ export function GameCard({ game }: GameCardProps) {
             className="absolute flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 p-6 shadow-lg"
             style={{ backfaceVisibility: "hidden" }}
           >
-            <h2 className="line-clamp-2 text-center text-2xl font-bold text-white">
+            <h2 className="line-clamp-4 text-center text-2xl font-bold text-white">
               {game.summary}
             </h2>
           </div>
