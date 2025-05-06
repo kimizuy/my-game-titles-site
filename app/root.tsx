@@ -5,6 +5,8 @@ import { Main } from "./components/layout/main";
 import { TopNav } from "./components/layout/top-nav";
 import { ThemeProvider } from "./components/theme-provider";
 import { ThemeSwitch } from "./components/theme-switch";
+import { SITE_NAME } from "./lib/constants";
+import { Gamepad2 } from "lucide-react";
 import {
   Link,
   Links,
@@ -44,12 +46,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <TopNav
                 links={[
                   {
-                    title: "Home",
+                    title: (
+                      <div className="flex items-center gap-1">
+                        <Gamepad2 />
+                        {SITE_NAME}
+                      </div>
+                    ),
                     href: "/",
-                  },
-                  {
-                    title: "About",
-                    href: "/about",
                   },
                 ]}
               />
