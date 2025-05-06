@@ -27,6 +27,7 @@ export async function loader({ params }: Route.LoaderArgs) {
       image_id: "string",
     }).array(),
     "summary?": "string",
+    "url?": "string",
   });
 
   const data = await client.getGameById(params.id, [
@@ -36,6 +37,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     "cover.image_id",
     "artworks.image_id",
     "summary",
+    "url",
   ] satisfies NestedKeyOf<typeof Game.infer>[]);
 
   const validated = Game(data);
@@ -119,14 +121,19 @@ export default function GameDetail({ loaderData }: Route.ComponentProps) {
         </section>
       ) : null}
 
-      {loaderData.summary ? (
+      {loaderData.summary || loaderData.url ? (
         <section>
           <h2>Summary</h2>
-          <p>{loaderData.summary}</p>
+          {loaderData.summary ? <p>{loaderData.summary}</p> : null}
+          {loaderData.url ? (
+            <a href={loaderData.url} target="_blank" rel="noopener noreferrer">
+              {loaderData.url}
+            </a>
+          ) : null}
         </section>
       ) : null}
 
-      <div>
+      <div className="mt-12">
         <button
           type="button"
           onClick={handleBack}
