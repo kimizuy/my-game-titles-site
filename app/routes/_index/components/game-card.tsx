@@ -99,6 +99,7 @@ export function GameCard({ game }: GameCardProps) {
                 src={getIgdbImageUrl(game.cover?.image_id, "cover_big_2x")}
                 alt={game.name}
                 className="h-full w-full object-contain"
+                loading="lazy"
               />
             ) : (
               game.japanName
